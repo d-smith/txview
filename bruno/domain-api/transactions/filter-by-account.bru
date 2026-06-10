@@ -1,0 +1,15 @@
+meta {
+  name: Filter by Account
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/transactions?accountId=1
+  body: none
+  auth: none
+}
+
+params:query {
+  accountId: 1
+}
