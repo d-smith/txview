@@ -1,7 +1,7 @@
 package com.txview.categories.repository;
 
 import com.txview.categories.model.CategorySummary;
-import com.txview.categories.model.Transaction;
+import com.txview.transactions.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

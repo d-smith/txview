@@ -20,6 +20,7 @@
         <module>accounts-api</module>
         <module>transactions-api</module>
         <module>categories-api</module>
+        <module>domain-api</module>
         <module>bff</module>
     </modules>
 

@@ -6,9 +6,10 @@ Transaction analysis web app. Reads from the SQLite database produced by the [tx
 
 | Module | Port | Description |
 |--------|------|-------------|
-| `accounts-api` | 8082 | Spring Boot — accounts table |
-| `transactions-api` | 8083 | Spring Boot — transactions table |
-| `categories-api` | 8084 | Spring Boot — spend aggregated by category |
+| `accounts-api` | — | Maven library — accounts entity, repository, controller |
+| `transactions-api` | — | Maven library — transactions entity, repository, controller |
+| `categories-api` | — | Maven library — category aggregation repository, controller |
+| `domain-api` | 8082 | Spring Boot — packages the three domain modules into a single deployable |
 | `bff` | 8080 | Spring Boot — aggregates domain APIs for the web app |
 | `web` | 5173 | React + Vite (TypeScript) — frontend |
 
@@ -17,7 +18,7 @@ Transaction analysis web app. Reads from the SQLite database produced by the [tx
 ```bash
 # Java modules
 mvn compile        # compile only
-mvn package        # build fat JARs
+mvn package        # build JARs (only domain-api and bff produce executable fat JARs)
 
 # Frontend
 cd web && npm install
@@ -36,16 +37,14 @@ export DB_PATH=/path/to/transactions.db
 Start order (any order works — services are independent):
 
 ```bash
-java -jar accounts-api/target/accounts-api-1.0-SNAPSHOT.jar
-java -jar transactions-api/target/transactions-api-1.0-SNAPSHOT.jar
-java -jar categories-api/target/categories-api-1.0-SNAPSHOT.jar
+java -jar domain-api/target/domain-api-1.0-SNAPSHOT.jar
 java -jar bff/target/bff-1.0-SNAPSHOT.jar
 cd web && npm run dev
 ```
 
 ## Key conventions
 
-- **Java**: Spring Boot 3.3, Java 17, Maven multi-module. Each domain API is a standalone Spring Boot app with its own `application.properties`.
+- **Java**: Spring Boot 3.3, Java 17, Maven multi-module. The three domain modules (`accounts-api`, `transactions-api`, `categories-api`) are plain library JARs; `domain-api` is the single executable that packages them together.
 - **Database**: SQLite via `org.xerial:sqlite-jdbc` + `org.hibernate.community.dialect.SQLiteDialect`. Schema is owned by txloader — `ddl-auto=none` everywhere; never add `create` or `update`.
 - **BFF clients**: Use Spring `RestClient` (synchronous). Domain API base URLs are configured in `bff/src/main/resources/application.properties` via `txview.api.*` properties.
 - **Frontend proxy**: Vite dev server proxies `/api/*` to the BFF at `localhost:8080` — no CORS config needed in dev.
