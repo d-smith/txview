@@ -1,7 +1,7 @@
 package com.txview.transactions.controller;
 
+import com.txview.transactions.dao.TransactionDao;
 import com.txview.transactions.model.Transaction;
-import com.txview.transactions.repository.TransactionRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,23 +10,23 @@ import java.util.List;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-    private final TransactionRepository repo;
+    private final TransactionDao transactionDao;
 
-    public TransactionController(TransactionRepository repo) {
-        this.repo = repo;
+    public TransactionController(TransactionDao transactionDao) {
+        this.transactionDao = transactionDao;
     }
 
     @GetMapping
     public List<Transaction> list(
             @RequestParam(required = false) Long accountId,
             @RequestParam(required = false) String category) {
-        if (accountId != null) return repo.findByAccountId(accountId);
-        if (category != null) return repo.findByCategory(category);
-        return repo.findAll();
+        if (accountId != null) return transactionDao.findByAccountId(accountId);
+        if (category != null) return transactionDao.findByCategory(category);
+        return transactionDao.findAll();
     }
 
     @GetMapping("/{id}")
     public Transaction get(@PathVariable Long id) {
-        return repo.findById(id).orElseThrow();
+        return transactionDao.findById(id).orElseThrow();
     }
 }

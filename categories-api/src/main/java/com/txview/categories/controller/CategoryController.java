@@ -1,7 +1,7 @@
 package com.txview.categories.controller;
 
+import com.txview.categories.dao.CategoryDao;
 import com.txview.categories.model.CategorySummary;
-import com.txview.categories.repository.CategoryRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    private final CategoryRepository repo;
+    private final CategoryDao categoryDao;
 
-    public CategoryController(CategoryRepository repo) {
-        this.repo = repo;
+    public CategoryController(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
     }
 
     @GetMapping
     public List<CategorySummary> list() {
-        return repo.findCategorySummaries();
+        return categoryDao.findCategorySummaries();
     }
 }

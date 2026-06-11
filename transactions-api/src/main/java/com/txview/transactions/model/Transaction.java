@@ -1,27 +1,13 @@
 package com.txview.transactions.model;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "transactions")
 public class Transaction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String date;
-
     private String merchant;
-
     private Double amount;
-
     private String category;
-
-    @Column(name = "account_id")
     private Long accountId;
-
-    @Column(name = "raw_desc")
     private String rawDesc;
 
     public Long getId() { return id; }

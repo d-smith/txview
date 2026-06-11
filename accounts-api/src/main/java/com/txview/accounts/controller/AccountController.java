@@ -1,7 +1,7 @@
 package com.txview.accounts.controller;
 
+import com.txview.accounts.dao.AccountDao;
 import com.txview.accounts.model.Account;
-import com.txview.accounts.repository.AccountRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,19 +10,19 @@ import java.util.List;
 @RequestMapping("/accounts")
 public class AccountController {
 
-    private final AccountRepository repo;
+    private final AccountDao accountDao;
 
-    public AccountController(AccountRepository repo) {
-        this.repo = repo;
+    public AccountController(AccountDao accountDao) {
+        this.accountDao = accountDao;
     }
 
     @GetMapping
     public List<Account> list() {
-        return repo.findAll();
+        return accountDao.findAll();
     }
 
     @GetMapping("/{id}")
     public Account get(@PathVariable Long id) {
-        return repo.findById(id).orElseThrow();
+        return accountDao.findById(id).orElseThrow();
     }
 }
