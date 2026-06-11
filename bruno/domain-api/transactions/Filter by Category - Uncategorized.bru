@@ -1,0 +1,15 @@
+meta {
+  name: Filter by Category - Uncategorized
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/transactions?category=Uncategorized
+  body: none
+  auth: none
+}
+
+params:query {
+  category: Uncategorized
+}
