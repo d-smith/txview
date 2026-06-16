@@ -1,6 +1,6 @@
 # TxView - Transaction Analysis Web Application
 
-Web application for reviewing and analyzing transactions loaded by [txloader](../txloader). Reads from the SQLite database produced by the txloader ingestion pipeline.
+Web application for reviewing and analyzing transactions loaded by [txloader](../txloader). Reads from the PostgreSQL database produced by the txloader ingestion pipeline.
 
 **Architecture:** Domain APIs → BFF → React web frontend
 
@@ -22,7 +22,7 @@ Web application for reviewing and analyzing transactions loaded by [txloader](..
 | Java 17+ | Required to run the JARs |
 | Maven 3.8+ | Required to build from source |
 | Node.js 20+ | Required for the web frontend |
-| txloader database | The `transactions.db` file produced by txloader |
+| txloader database | A running PostgreSQL instance loaded by txloader (see `txloader/docker-compose.yaml`) |
 
 ## Build
 
@@ -38,10 +38,14 @@ cd web && npm install && npm run build
 
 ## Running
 
-Point all services at the txloader database by setting `DB_PATH`:
+Point all services at the txloader PostgreSQL database (defaults below match `txloader/docker-compose.yaml`, so local dev needs no env vars):
 
 ```bash
-export DB_PATH=/path/to/transactions.db
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_NAME=txloader
+export DB_USER=myuser
+export DB_PASSWORD=mypassword
 ```
 
 Start services in any order:
