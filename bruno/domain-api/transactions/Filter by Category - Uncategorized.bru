@@ -5,11 +5,13 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/transactions?category=Uncategorized
+  url: {{baseUrl}}/transactions?category=Uncategorized&page=0&size=5
   body: none
   auth: none
 }
 
 params:query {
   category: Uncategorized
+  page: 0
+  size: 5
 }

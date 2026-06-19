@@ -5,7 +5,12 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/transactions
+  url: {{baseUrl}}/transactions?page=0&size=5
   body: none
   auth: none
+}
+
+params:query {
+  page: 0
+  size: 5
 }

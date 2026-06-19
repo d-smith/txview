@@ -38,8 +38,11 @@ public class DashboardController {
     }
 
     @GetMapping("/accounts/{id}/transactions")
-    public List<Map<String, Object>> transactionsByAccount(@PathVariable Long id) {
-        return transactions.findByAccountId(id);
+    public Map<String, Object> transactionsByAccount(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "25") int size) {
+        return transactions.findByAccountId(id, page, size);
     }
 
     @GetMapping("/categories")
